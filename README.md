@@ -4,7 +4,7 @@
 
 <h1 align="center">SubTrack</h1>
 <p align="center">
-  Modern Spring Boot MVC dashboard za pracenje digitalnih pretplata.
+  A modern Spring Boot MVC dashboard for tracking digital subscriptions, renewals, and monthly spending.
 </p>
 
 <p align="center">
@@ -16,40 +16,55 @@
   <img src="https://img.shields.io/badge/Spring_AOP-Enabled-0A1C3D?style=for-the-badge&logo=spring&logoColor=6DB33F" alt="Spring AOP" />
 </p>
 
-## Project Overview
-SubTrack je desktop web aplikacija koja pomaze korisniku da prati:
-- aktivne pretplate
-- troskove po ciklusu naplate
-- datume obnove
-- podsetnike i budzet status
+## Overview
+SubTrack is a desktop-oriented web application built with Spring Boot MVC and Thymeleaf.
+It helps users manage recurring subscriptions, monitor costs, and stay ahead of renewals with a clean SaaS-style dashboard.
 
-Aplikacija koristi in-memory application scope storage (bez baze), zato je odlicna za razvoj, demo i akademske projekte.
+## Key Features
+- Subscription dashboard with KPI cards and spending overview
+- Subscription management flow (list, create, details, edit, delete)
+- Category, provider, payment, and reminder service layers
+- In-memory application-wide storage (no external database)
+- Modular Thymeleaf templates with reusable fragments
+- Responsive UI with modern card/table/layout styling
 
 ## Tech Stack
-- Backend: Spring Boot + Spring MVC
-- View layer: Thymeleaf templates
-- Styling: Static CSS (bez React/Vue/Angular)
-- Storage: `ApplicationStorage` (`@ApplicationScope`)
-- Build: Maven Wrapper (`./mvnw`)
+- **Backend:** Spring Boot, Spring MVC
+- **View Layer:** Thymeleaf
+- **Aspect Support:** Spring AOP
+- **Validation:** Spring Validation
+- **Build Tool:** Maven Wrapper
+- **Data Storage:** Application-scope in-memory storage
 
-## Current Architecture
-- Package root: `rs.ac.metropolitan.subtrack`
-- Layering:
-- `model` za domenske objekte
-- `storage` za centralno memorijsko skladiste
-- `service` za poslovnu logiku
-- `controller` za HTTP rute i view model
-- `templates` + `static` za UI
+## Project Structure
+```text
+src/main/java/rs/ac/metropolitan/subtrack
+  config/
+  controller/
+  model/
+  service/
+  storage/
 
-## Run Locally
-Iz root direktorijuma projekta:
+src/main/resources
+  templates/
+    fragments/
+  static/
+    css/
+    img/
+```
 
+## Getting Started
+### 1. Run tests
 ```bash
 ./mvnw clean test
+```
+
+### 2. Start the application
+```bash
 ./mvnw spring-boot:run
 ```
 
-Aplikacija je dostupna na:
+### 3. Open in browser
 - [http://localhost:8080](http://localhost:8080)
 - [http://localhost:8080/dashboard](http://localhost:8080/dashboard)
 
@@ -63,47 +78,34 @@ Aplikacija je dostupna na:
 - `/settings`
 
 ## Development Workflow
-1. Pokreni aplikaciju:
-```bash
-./mvnw spring-boot:run
-```
-2. Menjaj HTML/CSS i radi refresh browsera.
-3. Menjaj Java kod i Spring DevTools ce uraditi restart.
-4. Pre svakog commit-a pokreni:
-```bash
-./mvnw clean test
-```
+1. Start the app with `./mvnw spring-boot:run`
+2. Update templates/styles and refresh the browser
+3. Update Java code (DevTools handles restart)
+4. Run `./mvnw clean test` before each commit
 
-## Project Rules
-- Bez JPA i bez SQL baze.
-- Bez Spring Security (u ovoj fazi projekta).
-- Bez frontend framework-a i build alata.
-- Sve ostaje u `rs.ac.metropolitan.subtrack` namespace-u.
+## Current Progress
+Completed:
+- Initial Spring Boot MVC setup
+- Core domain models and enums
+- Application-scope storage
+- Demo data initialization
+- Subscription, category, provider, payment, and reminder services
+- Dashboard and subscription pages with modern UI
 
-## Status Snapshot
-Zavrseno:
-- Spring Boot setup
-- model sloj + enum-i
-- application scope storage
-- demo data initializer
-- subscription/category/provider/payment/reminder servisi
-- dashboard + subscriptions + dodatne dashboard stranice
-- responsive SaaS styling i logo integracija
-
-Sledece:
-- category/provider CRUD UI
-- payment/reminder full pages
-- AOP audit log + performance aspekti
-- final dokumentacija i screenshotovi
+In progress / next:
+- Full CRUD pages for categories and providers
+- Payment and reminder management pages
+- Audit and performance aspects (AOP)
+- Final documentation and screenshot pack
 
 ## Useful Commands
 ```bash
-# test
+# run tests
 ./mvnw clean test
 
-# run
+# start app
 ./mvnw spring-boot:run
 
-# git check
+# check local changes
 git status
 ```
