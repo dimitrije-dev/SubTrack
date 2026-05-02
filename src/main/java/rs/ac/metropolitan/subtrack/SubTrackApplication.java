@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SubtrackApplication {
+public class SubTrackApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SubtrackApplication.class, args);
+        SpringApplication.run(SubTrackApplication.class, args);
     }
 
 }
