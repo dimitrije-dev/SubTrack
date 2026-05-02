@@ -2,31 +2,53 @@
 
 Spring Boot MVC aplikacija za upravljanje i pracenje digitalnih pretplata.
 
-## Pokretanje backend-a
+## Tehnologije
 
-Iz root direktorijuma projekta:
+- Backend: Spring Boot (Spring MVC)
+- Frontend: Thymeleaf (`templates`) + static resursi (`static`)
+
+## Pokretanje aplikacije (backend + frontend)
+
+U ovom projektu frontend je deo iste Spring Boot aplikacije (nije poseban React/Vue projekat).
+
+Iz root direktorijuma:
 
 ```bash
 ./mvnw clean test
 ./mvnw spring-boot:run
 ```
 
-Backend ce biti dostupan na:
+Aplikacija ce biti dostupna na:
 
 `http://localhost:8080`
 
-## Pokretanje frontend-a
+## Kako da pratis napredak izmena
 
-Napomena: frontend projekat trenutno nije dodat u ovaj repozitorijum.
-
-Kada ga dodas (npr. u folder `frontend`), koristi:
+1. Drzi server pokrenut:
 
 ```bash
-cd frontend
-npm install
-npm run dev
+./mvnw spring-boot:run
 ```
 
-Frontend je obicno dostupan na:
+2. Otvori u browser-u:
 
-`http://localhost:5173`
+`http://localhost:8080`
+
+3. Kada menjas:
+- HTML (`src/main/resources/templates/...`) samo osvezi stranicu.
+- CSS (`src/main/resources/static/css/...`) samo osvezi stranicu.
+- Java klase (`src/main/java/...`) DevTools automatski restartuje aplikaciju.
+
+## Korisne komande
+
+- Pokretanje testova:
+
+```bash
+./mvnw clean test
+```
+
+- Brza provera statusa izmena:
+
+```bash
+git status
+```

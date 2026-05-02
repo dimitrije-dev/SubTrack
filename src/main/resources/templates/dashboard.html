@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>SubTrack</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<head th:replace="~{fragments/head :: head('SubTrack Dashboard')}"></head>
 <body>
+    <header th:replace="~{fragments/topbar :: topbar}"></header>
+
     <main class="container">
         <h1>SubTrack</h1>
         <p>Spring Boot MVC aplikacija za pracenje digitalnih pretplata.</p>
+
+        <section class="status-card">
+            <h2>Trenutni status projekta</h2>
+            <ul>
+                <li>Osnovni Spring Boot setup je spreman</li>
+                <li>Model klase i enum-i su dodati</li>
+                <li>Sledece: application scope storage i CRUD tokovi</li>
+            </ul>
+        </section>
     </main>
 </body>
 </html>
