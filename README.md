@@ -1,9 +1,5 @@
 <p align="center">
-  <img src="src/main/resources/static/img/readme-banner.png" alt="SubTrack Banner" width="100%" />
-</p>
-
-<p align="center">
-  <img src="src/main/resources/static/img/logo.png" alt="SubTrack Logo" width="160" />
+  <img src="src/main/resources/static/img/readme-banner-white.png" alt="SubTrack Banner" width="100%" />
 </p>
 
 <h1 align="center">SubTrack</h1>
@@ -113,3 +109,13 @@ In progress / next:
 # check local changes
 git status
 ```
+
+---
+
+<p align="center">
+  <img src="src/main/resources/static/img/logo.png" alt="SubTrack Logo" width="110" />
+</p>
+<p align="center">
+  <strong>SubTrack</strong><br/>
+  <em>Organize. Track. Save.</em>
+</p>
