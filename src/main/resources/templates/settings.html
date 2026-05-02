@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+
+        <section class="page-content">
+            <article class="card form-card">
+                <div class="card-head">
+                    <h2>Workspace Settings</h2>
+                    <p>Personalize dashboard behavior and notification preferences.</p>
+                </div>
+
+                <form class="form-grid">
+                    <label>
+                        Display Name
+                        <input type="text" value="Alex Johnson">
+                    </label>
+
+                    <label>
+                        Preferred Currency
+                        <select>
+                            <option>EUR</option>
+                            <option>USD</option>
+                            <option>GBP</option>
+                        </select>
+                    </label>
+
+                    <label class="span-2 checkbox-line">
+                        <input type="checkbox" checked>
+                        Enable email reminders for upcoming renewals
+                    </label>
+
+                    <div class="form-actions span-2">
+                        <button type="button" class="btn btn-gradient">Save Changes</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

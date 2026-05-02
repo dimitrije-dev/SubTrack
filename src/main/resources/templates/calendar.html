@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+
+        <section class="page-content">
+            <article class="card">
+                <div class="card-head card-head--row">
+                    <div>
+                        <h2>Renewal Calendar</h2>
+                        <p>Track due dates and reminders for all subscriptions.</p>
+                    </div>
+                    <button class="btn btn-gradient" type="button">Add Reminder</button>
+                </div>
+
+                <div class="calendar-large">
+                    <div class="calendar-headings">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                    <div class="calendar-grid calendar-grid--large">
+                        <span class="muted">28</span><span class="muted">29</span><span class="muted">30</span>
+                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+                        <span class="active-day">25</span>
+                        <span class="has-dot">26</span><span class="has-dot">27</span><span class="has-dot">28</span><span class="has-dot">29</span><span>30</span><span>31</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

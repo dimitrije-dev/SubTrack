@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+
+        <section class="page-content">
+            <section class="two-col">
+                <article class="card chart-card">
+                    <div class="card-head">
+                        <h2>Spending Trend</h2>
+                        <p>Month over month subscription cost dynamics.</p>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-col" th:each="bar : ${monthlyBars}">
+                            <div class="bar-track"><div class="bar" th:style="'height:' + ${bar.heightPercent} + '%'"></div></div>
+                            <p class="bar-label" th:text="${bar.month}">May 2025</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card donut-card">
+                    <div class="card-head">
+                        <h2>Category Mix</h2>
+                        <p>Allocation of spending by category.</p>
+                    </div>
+                    <ul class="legend-list">
+                        <li th:each="category : ${categories}">
+                            <span class="legend-dot" th:classappend="${category.colorClass}"></span>
+                            <span th:text="${category.name}">Productivity</span>
+                            <strong th:text="${category.percentage} + '%'">38%</strong>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+        </section>
+    </main>
+</div>
+</body>
+</html>

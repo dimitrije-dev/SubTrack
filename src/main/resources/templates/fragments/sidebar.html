@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="sidebar" th:fragment="sidebar(activePage)">
+    <div class="sidebar__brand">
+        <img src="/img/logo.png" alt="SubTrack logo" class="brand-logo">
+        <div>
+            <p class="brand-name">SubTrack</p>
+            <p class="brand-subtitle">Subscription Intelligence</p>
+        </div>
+    </div>
+
+    <nav class="sidebar__nav">
+        <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? ' is-active' : ''">Dashboard</a>
+        <a th:href="@{/subscriptions}" class="nav-link" th:classappend="${activePage == 'subscriptions'} ? ' is-active' : ''">Subscriptions</a>
+        <a th:href="@{/calendar}" class="nav-link" th:classappend="${activePage == 'calendar'} ? ' is-active' : ''">Calendar</a>
+        <a th:href="@{/analytics}" class="nav-link" th:classappend="${activePage == 'analytics'} ? ' is-active' : ''">Analytics</a>
+        <a th:href="@{/reminders}" class="nav-link" th:classappend="${activePage == 'reminders'} ? ' is-active' : ''">Reminders</a>
+        <a th:href="@{/budgets}" class="nav-link" th:classappend="${activePage == 'budgets'} ? ' is-active' : ''">Budgets</a>
+        <a th:href="@{/settings}" class="nav-link" th:classappend="${activePage == 'settings'} ? ' is-active' : ''">Settings</a>
+    </nav>
+
+    <div class="sidebar__bottom">
+        <a href="#" class="nav-link nav-link--subtle">Help &amp; Support</a>
+        <section class="premium-card">
+            <p class="premium-title">Go Premium</p>
+            <p class="premium-text">Unlock deeper analytics and smart renewal automation.</p>
+            <button type="button" class="btn btn-gradient">Upgrade Plan</button>
+        </section>
+    </div>
+</aside>
+</body>
+</html>

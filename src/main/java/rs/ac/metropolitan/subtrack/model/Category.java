@@ -5,6 +5,8 @@ public class Category {
     private Long id;
     private String name;
     private String description;
+    private int percentage;
+    private String colorClass;
 
     public Category() {
     }
@@ -13,6 +15,13 @@ public class Category {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Category(Long id, String name, int percentage, String colorClass) {
+        this.id = id;
+        this.name = name;
+        this.percentage = percentage;
+        this.colorClass = colorClass;
     }
 
     public Long getId() {
@@ -37,5 +46,21 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
+    }
+
+    public String getColorClass() {
+        return colorClass;
+    }
+
+    public void setColorClass(String colorClass) {
+        this.colorClass = colorClass;
     }
 }

@@ -1,5 +1,6 @@
 package rs.ac.metropolitan.subtrack.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RenewalReminder {
@@ -9,6 +10,10 @@ public class RenewalReminder {
     private LocalDate reminderDate;
     private String message;
     private boolean completed;
+    private String serviceName;
+    private LocalDate renewalDate;
+    private BigDecimal price;
+    private int daysLeft;
 
     public RenewalReminder() {
     }
@@ -19,6 +24,17 @@ public class RenewalReminder {
         this.reminderDate = reminderDate;
         this.message = message;
         this.completed = completed;
+    }
+
+    public RenewalReminder(Long id, String serviceName, LocalDate renewalDate, BigDecimal price, int daysLeft) {
+        this.id = id;
+        this.serviceName = serviceName;
+        this.renewalDate = renewalDate;
+        this.price = price;
+        this.daysLeft = daysLeft;
+        this.reminderDate = renewalDate;
+        this.message = serviceName + " renewal reminder";
+        this.completed = false;
     }
 
     public Long getId() {
@@ -63,5 +79,38 @@ public class RenewalReminder {
 
     public void markAsCompleted() {
         this.completed = true;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public LocalDate getRenewalDate() {
+        return renewalDate;
+    }
+
+    public void setRenewalDate(LocalDate renewalDate) {
+        this.renewalDate = renewalDate;
+        this.reminderDate = renewalDate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }

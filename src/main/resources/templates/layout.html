@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | SubTrack'">SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+        <section class="page-content">
+            <div class="card">
+                <h2>Layout Template</h2>
+                <p>Ovaj fajl je bazna struktura za sve dashboard stranice.</p>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

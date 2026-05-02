@@ -1,21 +1,222 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head('SubTrack Dashboard')}"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
 <body>
-    <header th:replace="~{fragments/topbar :: topbar}"></header>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
 
-    <main class="container">
-        <h1>SubTrack</h1>
-        <p>Spring Boot MVC aplikacija za pracenje digitalnih pretplata.</p>
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
 
-        <section class="status-card">
-            <h2>Trenutni status projekta</h2>
-            <ul>
-                <li>Osnovni Spring Boot setup je spreman</li>
-                <li>Model klase i enum-i su dodati</li>
-                <li>Sledece: application scope storage i CRUD tokovi</li>
-            </ul>
+        <section class="page-content">
+            <section class="kpi-grid">
+                <article class="kpi-card">
+                    <div class="kpi-icon icon-money">$</div>
+                    <p class="kpi-label">Total Monthly Spend</p>
+                    <p class="kpi-value" th:text="'$' + ${#numbers.formatDecimal(totalMonthlySpend,1,2)}">$256.58</p>
+                    <p class="kpi-delta kpi-delta--down">↓ 3.4% vs last month</p>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-icon icon-active">A</div>
+                    <p class="kpi-label">Active Subscriptions</p>
+                    <p class="kpi-value" th:text="${activeSubscriptions}">18</p>
+                    <p class="kpi-delta kpi-delta--up">↑ 2 new services this month</p>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-icon icon-renewal">R</div>
+                    <p class="kpi-label">Upcoming Renewals</p>
+                    <p class="kpi-value" th:text="${upcomingRenewalsCount}">5</p>
+                    <p class="kpi-delta kpi-delta--down">↓ 1 compared to last week</p>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-icon icon-projection">Y</div>
+                    <p class="kpi-label">Annual Projection</p>
+                    <p class="kpi-value" th:text="'$' + ${#numbers.formatDecimal(annualProjection,1,2)}">$3,078.96</p>
+                    <p class="kpi-delta">Based on current monthly trend</p>
+                </article>
+            </section>
+
+            <section class="two-col two-col--top">
+                <article class="card chart-card">
+                    <div class="card-head">
+                        <h2>Spending Overview</h2>
+                        <p>Monthly trend (Dec 2024 - May 2025)</p>
+                    </div>
+
+                    <div class="bar-chart">
+                        <div class="bar-col" th:each="bar,iter : ${monthlyBars}">
+                            <div class="bar-track">
+                                <div class="bar" th:style="'height:' + ${bar.heightPercent} + '%'">
+                                    <span class="bar-tooltip" th:if="${iter.last}" th:text="'$' + ${#numbers.formatDecimal(bar.amount,1,2)}">$256.58</span>
+                                </div>
+                            </div>
+                            <p class="bar-label" th:text="${bar.month}">May 2025</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card renewal-card">
+                    <div class="card-head">
+                        <h2>Upcoming Renewals</h2>
+                        <p>Prioritized by nearest due date</p>
+                    </div>
+
+                    <ul class="renewal-list">
+                        <li th:each="reminder : ${upcomingRenewals}">
+                            <div>
+                                <p class="renewal-service" th:text="${reminder.serviceName}">Adobe Creative Cloud</p>
+                                <p class="renewal-date" th:text="${#temporals.format(reminder.renewalDate,'MMM d, yyyy')}">May 28, 2025</p>
+                            </div>
+                            <div class="renewal-meta">
+                                <span class="renewal-price" th:text="'$' + ${#numbers.formatDecimal(reminder.price,1,2)}">$54.99</span>
+                                <span class="renewal-badge" th:text="'in ' + ${reminder.daysLeft} + ' days'">in 3 days</span>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+
+            <article class="card table-card">
+                <div class="card-head card-head--row">
+                    <div>
+                        <h2>Your Subscriptions</h2>
+                        <p>Manage plans, billing cycles, and renewal dates</p>
+                    </div>
+                    <a class="btn btn-gradient" th:href="@{/subscriptions/new}">+ Add Subscription</a>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Billing Cycle</th>
+                            <th>Next Renewal</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="subscription : ${subscriptions}">
+                            <td>
+                                <div class="service-pill">
+                                    <span class="service-icon" th:classappend="${subscription.iconClass}"></span>
+                                    <span th:text="${subscription.serviceName}">Netflix</span>
+                                </div>
+                            </td>
+                            <td><span class="category-badge" th:text="${subscription.category}">Entertainment</span></td>
+                            <td th:text="'$' + ${#numbers.formatDecimal(subscription.priceAmount,1,2)}">$15.49</td>
+                            <td th:text="${subscription.billingCycle}">MONTHLY</td>
+                            <td th:text="${#temporals.format(subscription.nextRenewalDate,'MMM d, yyyy')}">May 30, 2025</td>
+                            <td><span class="status-badge status-badge--active" th:text="${subscription.status}">ACTIVE</span></td>
+                            <td>
+                                <div class="action-links">
+                                    <a th:href="@{'/subscriptions/' + ${subscription.id}}">View</a>
+                                    <a th:href="@{'/subscriptions/' + ${subscription.id} + '/edit'}">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <section class="three-col">
+                <article class="card donut-card">
+                    <div class="card-head">
+                        <h2>Spending by Category</h2>
+                        <p>Distribution of monthly recurring costs</p>
+                    </div>
+
+                    <div class="donut-wrap">
+                        <div class="donut-chart">
+                            <div>
+                                <p class="donut-total">$256.58</p>
+                                <p class="donut-sub">Total</p>
+                            </div>
+                        </div>
+
+                        <ul class="legend-list">
+                            <li th:each="category : ${categories}">
+                                <span class="legend-dot" th:classappend="${category.colorClass}"></span>
+                                <span th:text="${category.name}">Productivity</span>
+                                <strong th:text="${category.percentage} + '%'">38%</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card activity-card">
+                    <div class="card-head">
+                        <h2>Recent Activity</h2>
+                        <p>Latest events in your workspace</p>
+                    </div>
+
+                    <ul class="activity-list">
+                        <li th:each="activity : ${activities}">
+                            <div>
+                                <p class="activity-service" th:text="${activity.serviceName}">Adobe Creative Cloud</p>
+                                <p class="activity-description" th:text="${activity.description}">Subscription renewed</p>
+                            </div>
+                            <span class="activity-time" th:text="${activity.timeAgo}">2h ago</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="card budget-card">
+                    <div class="card-head">
+                        <h2>Budget Status</h2>
+                        <p>Current monthly spending progress</p>
+                    </div>
+
+                    <p class="budget-main">Monthly Budget: <strong th:text="'$' + ${#numbers.formatDecimal(budget.monthlyBudget,1,2)}">$300.00</strong></p>
+                    <p class="budget-spent"><span th:text="'$' + ${#numbers.formatDecimal(budget.spentAmount,1,2)}">$256.58</span> spent</p>
+
+                    <div class="progress-track">
+                        <div class="progress-fill" th:style="'width:' + ${budget.usedPercentage} + '%'"></div>
+                    </div>
+
+                    <p class="budget-remain"><span th:text="'$' + ${#numbers.formatDecimal(budget.remainingAmount,1,2)}">$43.42</span> remaining</p>
+                    <a th:href="@{/budgets}" class="btn btn-outline">Manage Budget</a>
+                </article>
+            </section>
+
+            <article class="card calendar-card">
+                <div class="card-head card-head--row">
+                    <div>
+                        <h2>Calendar</h2>
+                        <p>May 2025</p>
+                    </div>
+                    <a class="link-inline" th:href="@{/calendar}">Open full calendar</a>
+                </div>
+
+                <div class="mini-calendar">
+                    <div class="calendar-headings">
+                        <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                    </div>
+                    <div class="calendar-grid">
+                        <span class="muted">28</span><span class="muted">29</span><span class="muted">30</span>
+                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+                        <span class="active-day">25</span>
+                        <span class="has-dot">26</span><span class="has-dot">27</span><span class="has-dot">28</span><span>29</span><span>30</span><span>31</span>
+                    </div>
+                </div>
+            </article>
         </section>
     </main>
+</div>
 </body>
 </html>

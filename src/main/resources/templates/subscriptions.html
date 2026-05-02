@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriptions | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+
+        <section class="page-content">
+            <article class="card table-card">
+                <div class="card-head card-head--row">
+                    <div>
+                        <h2>All Subscriptions</h2>
+                        <p>Detailed overview of services, billing cadence, and renewal status.</p>
+                    </div>
+                    <a class="btn btn-gradient" th:href="@{/subscriptions/new}">+ Add Subscription</a>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Billing Cycle</th>
+                            <th>Next Renewal</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="subscription : ${subscriptions}">
+                            <td>
+                                <div class="service-pill">
+                                    <span class="service-icon" th:classappend="${subscription.iconClass}"></span>
+                                    <span th:text="${subscription.serviceName}">Netflix</span>
+                                </div>
+                            </td>
+                            <td><span class="category-badge" th:text="${subscription.category}">Entertainment</span></td>
+                            <td th:text="'$' + ${#numbers.formatDecimal(subscription.priceAmount,1,2)}">$0.00</td>
+                            <td th:text="${subscription.billingCycle}">MONTHLY</td>
+                            <td th:text="${subscription.nextRenewalDate != null ? #temporals.format(subscription.nextRenewalDate,'MMM d, yyyy') : '-'}">-</td>
+                            <td>
+                                <span class="status-badge"
+                                      th:classappend="${subscription.status.name() == 'ACTIVE'} ? ' status-badge--active' : (${subscription.status.name() == 'PAUSED'} ? ' status-badge--paused' : ' status-badge--cancelled')"
+                                      th:text="${subscription.status}">ACTIVE</span>
+                            </td>
+                            <td>
+                                <div class="action-links">
+                                    <a th:href="@{'/subscriptions/' + ${subscription.id}}">View</a>
+                                    <a th:href="@{'/subscriptions/' + ${subscription.id} + '/edit'}">Edit</a>
+                                    <form th:action="@{'/subscriptions/' + ${subscription.id} + '/delete'}" method="post">
+                                        <button type="submit" class="link-btn">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

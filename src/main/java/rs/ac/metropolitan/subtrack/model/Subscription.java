@@ -1,5 +1,7 @@
 package rs.ac.metropolitan.subtrack.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class Subscription {
@@ -14,6 +16,9 @@ public class Subscription {
     private SubscriptionStatus status;
     private Long providerId;
     private Long categoryId;
+    private String serviceName;
+    private String category;
+    private String iconClass;
 
     public Subscription() {
     }
@@ -38,6 +43,27 @@ public class Subscription {
         this.status = status;
         this.providerId = providerId;
         this.categoryId = categoryId;
+        this.serviceName = name;
+    }
+
+    public Subscription(Long id,
+                        String serviceName,
+                        String category,
+                        BigDecimal price,
+                        String billingCycle,
+                        LocalDate nextRenewalDate,
+                        String status,
+                        String iconClass) {
+        this.id = id;
+        this.name = serviceName;
+        this.serviceName = serviceName;
+        this.category = category;
+        this.price = price != null ? price.doubleValue() : 0.0;
+        this.billingCycle = "YEARLY".equalsIgnoreCase(billingCycle) ? BillingCycle.YEARLY : BillingCycle.MONTHLY;
+        this.startDate = LocalDate.now().minusMonths(1);
+        this.nextRenewalDate = nextRenewalDate;
+        this.status = parseStatus(status);
+        this.iconClass = iconClass;
     }
 
     public Long getId() {
@@ -54,6 +80,7 @@ public class Subscription {
 
     public void setName(String name) {
         this.name = name;
+        this.serviceName = name;
     }
 
     public String getDescription() {
@@ -70,6 +97,10 @@ public class Subscription {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public BigDecimal getPriceAmount() {
+        return BigDecimal.valueOf(price).setScale(2, RoundingMode.HALF_UP);
     }
 
     public BillingCycle getBillingCycle() {
@@ -120,6 +151,31 @@ public class Subscription {
         this.categoryId = categoryId;
     }
 
+    public String getServiceName() {
+        return serviceName != null ? serviceName : name;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+        this.name = serviceName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getIconClass() {
+        return iconClass;
+    }
+
+    public void setIconClass(String iconClass) {
+        this.iconClass = iconClass;
+    }
+
     public double getMonthlyCost() {
         if (billingCycle == BillingCycle.YEARLY) {
             return price / 12;
@@ -147,5 +203,16 @@ public class Subscription {
         LocalDate sevenDaysFromNow = today.plusDays(7);
 
         return !nextRenewalDate.isBefore(today) && !nextRenewalDate.isAfter(sevenDaysFromNow);
+    }
+
+    private SubscriptionStatus parseStatus(String statusValue) {
+        if (statusValue == null) {
+            return SubscriptionStatus.ACTIVE;
+        }
+        try {
+            return SubscriptionStatus.valueOf(statusValue.trim().toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return SubscriptionStatus.ACTIVE;
+        }
     }
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgets | SubTrack</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+
+    <main class="content-area">
+        <header th:replace="~{fragments/header :: header(${pageTitle})}"></header>
+
+        <section class="page-content">
+            <section class="two-col">
+                <article class="card budget-card">
+                    <div class="card-head">
+                        <h2>Monthly Budget</h2>
+                        <p>Control subscription spending with proactive limits.</p>
+                    </div>
+
+                    <p class="budget-main">Budget: <strong th:text="'$' + ${#numbers.formatDecimal(budget.monthlyBudget,1,2)}">$300.00</strong></p>
+                    <p class="budget-spent"><span th:text="'$' + ${#numbers.formatDecimal(budget.spentAmount,1,2)}">$256.58</span> spent</p>
+                    <div class="progress-track"><div class="progress-fill" th:style="'width:' + ${budget.usedPercentage} + '%'"></div></div>
+                    <p class="budget-remain"><span th:text="'$' + ${#numbers.formatDecimal(budget.remainingAmount,1,2)}">$43.42</span> remaining</p>
+                    <button class="btn btn-gradient" type="button">Manage Budget</button>
+                </article>
+
+                <article class="card">
+                    <div class="card-head">
+                        <h2>Budget Advice</h2>
+                        <p>AI-style recommendation placeholder for next iteration.</p>
+                    </div>
+                    <p class="placeholder-text">Consider pausing one low-value subscription to keep a 20% monthly reserve.</p>
+                </article>
+            </section>
+        </section>
+    </main>
+</div>
+</body>
+</html>

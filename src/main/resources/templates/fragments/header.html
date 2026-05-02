@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="top-header" th:fragment="header(pageTitle)">
+    <div>
+        <h1 class="page-title" th:text="${pageTitle}">Dashboard</h1>
+        <p class="page-subtitle">Overview of your subscriptions and spending trends.</p>
+    </div>
+
+    <div class="header-actions">
+        <label class="search-box">
+            <span class="search-icon">⌕</span>
+            <input type="text" placeholder="Search subscriptions, categories, or notes...">
+        </label>
+
+        <button class="icon-btn" type="button" aria-label="Notifications">🔔</button>
+
+        <div class="profile-chip">
+            <div class="profile-avatar">AJ</div>
+            <div>
+                <p class="profile-name">Alex Johnson</p>
+                <p class="profile-plan">Premium Plan</p>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>
