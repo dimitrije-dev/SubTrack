@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="src/main/resources/static/img/readme-banner.png" alt="SubTrack Banner" width="100%" />
+</p>
+
+<p align="center">
   <img src="src/main/resources/static/img/logo.png" alt="SubTrack Logo" width="160" />
 </p>
 
